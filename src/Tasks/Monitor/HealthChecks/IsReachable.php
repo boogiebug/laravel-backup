@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\Backup\Tasks\Monitor\HealthChecks;
+namespace Pinacono\Backup\Tasks\Monitor\HealthChecks;
 
-use Spatie\Backup\BackupDestination\BackupDestination;
-use Spatie\Backup\Tasks\Monitor\HealthCheck;
+use Pinacono\Backup\BackupDestination\BackupDestination;
+use Pinacono\Backup\Tasks\Monitor\HealthCheck;
 
 class IsReachable extends HealthCheck
 {

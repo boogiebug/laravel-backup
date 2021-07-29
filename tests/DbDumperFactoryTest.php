@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\Backup\Tests;
+namespace Pinacono\Backup\Tests;
 
-use Spatie\Backup\Exceptions\CannotCreateDbDumper;
-use Spatie\Backup\Tasks\Backup\DbDumperFactory;
+use Pinacono\Backup\Exceptions\CannotCreateDbDumper;
+use Pinacono\Backup\Tasks\Backup\DbDumperFactory;
 use Spatie\DbDumper\Databases\MongoDb;
 use Spatie\DbDumper\Databases\MySql;
 use Spatie\DbDumper\Databases\PostgreSql;

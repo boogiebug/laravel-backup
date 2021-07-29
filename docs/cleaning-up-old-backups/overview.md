@@ -30,7 +30,7 @@ This portion of the configuration determines which backups should be deleted.
          * No matter how you configure it the default strategy will never
          * deleted the newest backup.
          */
-        'strategy' => \Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
+        'strategy' => \Pinacono\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
 
         'default_strategy' => [
 
@@ -82,22 +82,22 @@ Of course the numbers used in the default configuration can be adjusted to suit 
 
 ## Creating your own strategy
 
-If you're requirements are not covered by the `DefaultStrategy`, you can create your own custom strategy. 
+If you're requirements are not covered by the `DefaultStrategy`, you can create your own custom strategy.
 
-Extend the abstract class `Spatie\Backup\Tasks\Cleanup\CleanupStrategy`. You only need to implement this method:
+Extend the abstract class `Pinacono\Backup\Tasks\Cleanup\CleanupStrategy`. You only need to implement this method:
 
 ```php
-use Spatie\Backup\BackupDestination\BackupCollection;
+use Pinacono\Backup\BackupDestination\BackupCollection;
 
 public function deleteOldBackups(BackupCollection $backupCollection)
 ```
 
-The `BackupCollection` class is extended from `Illuminate\Support\Collection` and contains `Spatie\Backup\BackupDestination\Backup` objects sorted by age. The latest backup is the first one in the collection.
+The `BackupCollection` class is extended from `Illuminate\Support\Collection` and contains `Pinacono\Backup\BackupDestination\Backup` objects sorted by age. The latest backup is the first one in the collection.
 
 Using the collection, you can easily manually delete the oldest backup:
 
 ```php
-// Retrieve an instance of `Spatie\Backup\BackupDestination\Backup`
+// Retrieve an instance of `Pinacono\Backup\BackupDestination\Backup`
 $backup = $backups->oldestBackup();
 
 // Bye bye backup

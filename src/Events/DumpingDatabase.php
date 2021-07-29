@@ -1,13 +1,10 @@
-<?php
-
-namespace Spatie\Backup\Events;
+<?php namespace Pinacono\Backup\Events;
 
 use Spatie\DbDumper\DbDumper;
 
-class DumpingDatabase
-{
-    public function __construct(
-        public DbDumper $dbDumper
-    ) {
-    }
+class DumpingDatabase {
+  public DbDumper $dbDumper;
+  public function __construct(DbDumper $dbDumper) {
+    $this->dbDumper = $dbDumper;
+  }
 }

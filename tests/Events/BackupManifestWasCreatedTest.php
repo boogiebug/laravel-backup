@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Backup\Tests\Events;
+namespace Pinacono\Backup\Tests\Events;
 
 use Illuminate\Support\Facades\Event;
-use Spatie\Backup\Events\BackupManifestWasCreated;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\Events\BackupManifestWasCreated;
+use Pinacono\Backup\Tests\TestCase;
 
 class BackupManifestWasCreatedTest extends TestCase
 {

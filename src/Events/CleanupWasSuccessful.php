@@ -1,13 +1,11 @@
-<?php
+<?php namespace Pinacono\Backup\Events;
 
-namespace Spatie\Backup\Events;
+use Pinacono\Backup\BackupDestination\BackupDestination;
 
-use Spatie\Backup\BackupDestination\BackupDestination;
+class CleanupWasSuccessful {
+  public BackupDestination $backupDestination;
 
-class CleanupWasSuccessful
-{
-    public function __construct(
-        public BackupDestination $backupDestination,
-    ) {
-    }
+  public function __construct( BackupDestination $backupDestination ) {
+    $this->backupDestination = $backupDestination;
+  }
 }

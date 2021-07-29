@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\Backup\Tests\Commands;
+namespace Pinacono\Backup\Tests\Commands;
 
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\Tests\TestCase;
 
 class ListCommandTest extends TestCase
 {

@@ -1,11 +1,9 @@
-<?php
+<?php namespace Pinacono\Backup\Events;
 
-namespace Spatie\Backup\Events;
+class BackupZipWasCreated {
+  public string $pathToZip;
 
-class BackupZipWasCreated
-{
-    public function __construct(
-        public string $pathToZip,
-    ) {
-    }
+  public function __construct(string $pathToZip) {
+    $this->pathToZip = $pathToZip;
+  }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Backup\Tests;
+namespace Pinacono\Backup\Tests;
 
 use Carbon\Carbon;
 use DateTime;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\Backup\BackupServiceProvider;
+use Pinacono\Backup\BackupServiceProvider;
 use ZipArchive;
 
 abstract class TestCase extends Orchestra

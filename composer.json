@@ -1,13 +1,12 @@
 {
-    "name": "spatie/laravel-backup",
-    "description": "A Laravel package to backup your application",
+    "name": "pinacono/laravel-backup",
+    "description": "A Laravel package to backup your application, based on Spatie's Laravel Backup (https://github.com/spatie/laravel-backup)",
     "keywords": [
-        "spatie",
         "backup",
         "database",
         "laravel-backup"
     ],
-    "homepage": "https://github.com/spatie/laravel-backup",
+    "homepage": "https://github.com/boogiebug/laravel-backup",
     "license": "MIT",
     "authors": [
         {
@@ -18,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": ">=7.4",
         "ext-zip": "^1.14.0",
         "illuminate/console": "^8.36",
         "illuminate/contracts": "^8.36",
@@ -28,7 +27,6 @@
         "illuminate/support": "^8.36",
         "league/flysystem": "^1.0.49|^2.0",
         "spatie/db-dumper": "^3.0",
-        "spatie/laravel-package-tools": "^1.6.2",
         "spatie/laravel-signal-aware-command": "^1.1",
         "spatie/temporary-directory": "^2.0",
         "symfony/console": "^5.2.12",
@@ -44,7 +42,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Backup\\": "src"
+            "Pinacono\\Backup\\": "src"
         },
         "files": [
             "src/Helpers/functions.php"
@@ -52,7 +50,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Backup\\Tests\\": "tests"
+            "Pinacono\\Backup\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -68,20 +66,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Backup\\BackupServiceProvider"
+                "Pinacono\\Backup\\ServiceProvider"
             ]
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "funding": [
-        {
-            "type": "github",
-            "url": "https://github.com/sponsors/spatie"
-        },
-        {
-            "type": "other",
-            "url": "https://spatie.be/open-source/support-us"
-        }
-    ]
+    "prefer-stable": true
 }

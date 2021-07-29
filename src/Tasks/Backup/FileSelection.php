@@ -1,123 +1,103 @@
-<?php
-
-namespace Spatie\Backup\Tasks\Backup;
+<?php namespace Pinacono\Backup\Tasks\Backup;
 
 use Generator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 
-class FileSelection
-{
-    protected Collection $includeFilesAndDirectories;
+class FileSelection {
+  protected Collection $includeFilesAndDirectories;
+  protected Collection $excludeFilesAndDirectories;
+  protected bool $shouldFollowLinks = false;
+  protected bool $shouldIgnoreUnreadableDirs = false;
 
-    protected Collection $excludeFilesAndDirectories;
+  public static function create($includeFilesAndDirectories = []): self {
+    return new static($includeFilesAndDirectories);
+  }
 
-    protected bool $shouldFollowLinks = false;
+  public function __construct($includeFilesAndDirectories = []) {
+    $this->includeFilesAndDirectories = collect($includeFilesAndDirectories);
+    $this->excludeFilesAndDirectories = collect();
+  }
 
-    protected bool $shouldIgnoreUnreadableDirs = false;
+  public function excludeFilesFrom($excludeFilesAndDirectories): self {
+    $this->excludeFilesAndDirectories = $this->excludeFilesAndDirectories->merge($this->sanitize($excludeFilesAndDirectories));
+    return $this;
+  }
 
-    public static function create(array | string $includeFilesAndDirectories = []): self
-    {
-        return new static($includeFilesAndDirectories);
+  public function shouldFollowLinks(bool $shouldFollowLinks): self {
+    $this->shouldFollowLinks = $shouldFollowLinks;
+    return $this;
+  }
+
+  public function shouldIgnoreUnreadableDirs(bool $ignoreUnreadableDirs): self {
+    $this->shouldIgnoreUnreadableDirs = $ignoreUnreadableDirs;
+    return $this;
+  }
+
+  public function selectedFiles() {
+    if ($this->includeFilesAndDirectories->isEmpty()) {
+      return [];
     }
 
-    public function __construct(array | string $includeFilesAndDirectories = [])
-    {
-        $this->includeFilesAndDirectories = collect($includeFilesAndDirectories);
+    $finder = (new Finder())
+      ->ignoreDotFiles(false)
+      ->ignoreVCS(false);
 
-        $this->excludeFilesAndDirectories = collect();
+    if ($this->shouldFollowLinks) {
+      $finder->followLinks();
     }
 
-    public function excludeFilesFrom(array | string $excludeFilesAndDirectories): self
-    {
-        $this->excludeFilesAndDirectories = $this->excludeFilesAndDirectories->merge($this->sanitize($excludeFilesAndDirectories));
-
-        return $this;
+    if ($this->shouldIgnoreUnreadableDirs) {
+      $finder->ignoreUnreadableDirs();
     }
 
-    public function shouldFollowLinks(bool $shouldFollowLinks): self
-    {
-        $this->shouldFollowLinks = $shouldFollowLinks;
-
-        return $this;
+    foreach ($this->includedFiles() as $includedFile) {
+      yield $includedFile;
     }
 
-    public function shouldIgnoreUnreadableDirs(bool $ignoreUnreadableDirs): self
-    {
-        $this->shouldIgnoreUnreadableDirs = $ignoreUnreadableDirs;
-
-        return $this;
+    if (! count($this->includedDirectories())) {
+      return [];
     }
 
-    public function selectedFiles(): Generator | array
-    {
-        if ($this->includeFilesAndDirectories->isEmpty()) {
-            return [];
-        }
+    $finder->in($this->includedDirectories());
 
-        $finder = (new Finder())
-            ->ignoreDotFiles(false)
-            ->ignoreVCS(false);
+    foreach ($finder->getIterator() as $file) {
+      if ($this->shouldExclude($file)) {
+        continue;
+      }
 
-        if ($this->shouldFollowLinks) {
-            $finder->followLinks();
-        }
+      yield $file->getPathname();
+    }
+  }
 
-        if ($this->shouldIgnoreUnreadableDirs) {
-            $finder->ignoreUnreadableDirs();
-        }
+  protected function includedFiles(): array {
+    return $this
+      ->includeFilesAndDirectories
+      ->filter(fn ($path) => is_file($path))->toArray();
+  }
 
-        foreach ($this->includedFiles() as $includedFile) {
-            yield $includedFile;
-        }
+  protected function includedDirectories(): array {
+    return $this
+      ->includeFilesAndDirectories
+      ->reject(fn ($path) => is_file($path))->toArray();
+  }
 
-        if (! count($this->includedDirectories())) {
-            return [];
-        }
-
-        $finder->in($this->includedDirectories());
-
-        foreach ($finder->getIterator() as $file) {
-            if ($this->shouldExclude($file)) {
-                continue;
-            }
-
-            yield $file->getPathname();
-        }
+  protected function shouldExclude(string $path): bool {
+    foreach ($this->excludeFilesAndDirectories as $excludedPath) {
+      if (Str::startsWith(realpath($path), $excludedPath)) {
+        return true;
+      }
     }
 
-    protected function includedFiles(): array
-    {
-        return $this
-            ->includeFilesAndDirectories
-            ->filter(fn ($path) => is_file($path))->toArray();
-    }
+    return false;
+  }
 
-    protected function includedDirectories(): array
-    {
-        return $this
-            ->includeFilesAndDirectories
-            ->reject(fn ($path) => is_file($path))->toArray();
-    }
-
-    protected function shouldExclude(string $path): bool
-    {
-        foreach ($this->excludeFilesAndDirectories as $excludedPath) {
-            if (Str::startsWith(realpath($path), $excludedPath)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected function sanitize(string | array $paths): Collection
-    {
-        return collect($paths)
-            ->reject(fn ($path) => $path === '')
-            ->flatMap(fn ($path) => glob($path))
-            ->map(fn ($path) => realpath($path))
-            ->reject(fn ($path) => $path === false);
-    }
+  protected function sanitize($paths): Collection {
+    return collect($paths)
+      ->reject(fn ($path) => $path === '')
+      ->flatMap(fn ($path) => glob($path))
+      ->map(fn ($path) => realpath($path))
+      ->reject(fn ($path) => $path === false);
+  }
 }

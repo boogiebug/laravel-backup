@@ -1,11 +1,11 @@
 <?php
 
-namespace Spatie\Backup\Notifications;
+namespace Pinacono\Backup\Notifications;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Collection;
-use Spatie\Backup\BackupDestination\BackupDestination;
-use Spatie\Backup\Helpers\Format;
+use Pinacono\Backup\BackupDestination\BackupDestination;
+use Pinacono\Backup\Helpers\Format;
 
 abstract class BaseNotification extends Notification
 {

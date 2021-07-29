@@ -1,14 +1,14 @@
 <?php
 
-namespace Spatie\Backup\Tests\Notifications;
+namespace Pinacono\Backup\Tests\Notifications;
 
 use Exception;
 use Illuminate\Support\Facades\Notification;
-use Spatie\Backup\BackupDestination\BackupDestinationFactory;
-use Spatie\Backup\Events\BackupHasFailed;
-use Spatie\Backup\Notifications\Notifiable;
-use Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification as BackupHasFailedNotification;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\BackupDestination\BackupDestinationFactory;
+use Pinacono\Backup\Events\BackupHasFailed;
+use Pinacono\Backup\Notifications\Notifiable;
+use Pinacono\Backup\Notifications\Notifications\BackupHasFailedNotification as BackupHasFailedNotification;
+use Pinacono\Backup\Tests\TestCase;
 
 class EventHandlerTest extends TestCase
 {

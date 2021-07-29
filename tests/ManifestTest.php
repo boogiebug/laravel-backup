@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\Backup\Tests;
+namespace Pinacono\Backup\Tests;
 
 use Generator;
-use Spatie\Backup\Tasks\Backup\Manifest;
+use Pinacono\Backup\Tasks\Backup\Manifest;
 
 class ManifestTest extends TestCase
 {

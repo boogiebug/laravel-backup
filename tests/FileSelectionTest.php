@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\Backup\Tests;
+namespace Pinacono\Backup\Tests;
 
-use Spatie\Backup\Tasks\Backup\FileSelection;
+use Pinacono\Backup\Tasks\Backup\FileSelection;
 
 class FileSelectionTest extends TestCase
 {

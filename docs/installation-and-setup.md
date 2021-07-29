@@ -16,7 +16,7 @@ The package will automatically register its service provider.
 To publish the config file to `config/backup.php` run:
 
 ``` bash
-php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
+php artisan vendor:publish --provider="Pinacono\Backup\BackupServiceProvider"
 ```
 
 This is the default contents of the configuration:
@@ -165,24 +165,24 @@ return [
      * For Slack you need to install laravel/slack-notification-channel.
      *
      * You can also use your own notification classes, just make sure the class is named after one of
-     * the `Spatie\Backup\Events` classes.
+     * the `Pinacono\Backup\Events` classes.
      */
     'notifications' => [
 
         'notifications' => [
-            \Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['mail'],
         ],
 
         /*
          * Here you can specify the notifiable to which the notifications should be sent. The default
          * notifiable will use the variables specified in this config file.
          */
-        'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
+        'notifiable' => \Pinacono\Backup\Notifications\Notifiable::class,
 
         'mail' => [
             'to' => 'your@example.com',
@@ -218,8 +218,8 @@ return [
             'name' => env('APP_NAME', 'laravel-backup'),
             'disks' => ['local'],
             'health_checks' => [
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+                \Pinacono\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
+                \Pinacono\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
             ],
         ],
 
@@ -228,8 +228,8 @@ return [
             'name' => 'name of the second app',
             'disks' => ['local', 's3'],
             'health_checks' => [
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+                \Pinacono\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
+                \Pinacono\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
             ],
         ],
         */
@@ -245,7 +245,7 @@ return [
          * No matter how you configure it the default strategy will never
          * delete the newest backup.
          */
-        'strategy' => \Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
+        'strategy' => \Pinacono\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
 
         'default_strategy' => [
 

@@ -1,13 +1,11 @@
-<?php
+<?php namespace Pinacono\Backup\Events;
 
-namespace Spatie\Backup\Events;
+use Pinacono\Backup\Tasks\Backup\Manifest;
 
-use Spatie\Backup\Tasks\Backup\Manifest;
+class BackupManifestWasCreated {
+  public Manifest $manifest;
 
-class BackupManifestWasCreated
-{
-    public function __construct(
-        public Manifest $manifest,
-    ) {
-    }
+  public function __construct( Manifest $manifest ) {
+    $this->manifest = $manifest;
+  }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\Backup\Tests\BackupDestination;
+namespace Pinacono\Backup\Tests\BackupDestination;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Backup\BackupDestination\Backup;
-use Spatie\Backup\BackupDestination\BackupCollection;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\BackupDestination\Backup;
+use Pinacono\Backup\BackupDestination\BackupCollection;
+use Pinacono\Backup\Tests\TestCase;
 
 class BackupCollectionTest extends TestCase
 {

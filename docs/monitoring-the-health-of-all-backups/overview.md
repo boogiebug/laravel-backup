@@ -4,7 +4,7 @@ weight: 1
 ---
 
 The package can check the health of backups for every application where it is installed. A backup is considered unhealthy if the date of the latest backup is too far in the past to be useful or if the amount of storage space required for all backups is not available.
- 
+
 ## Installation
 
 We recommend setting up a separate Laravel installation to do the monitoring, preferably on a separate server. This ensures you will be notified of unhealthy backups even if one of the applications you are monitoring is broken.
@@ -42,8 +42,8 @@ This is the part of the configuration where you can specify which applications s
             'name' => env('APP_NAME'),
             'disks' => ['s3'],
             'health_checks' => [
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+                \Pinacono\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
+                \Pinacono\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
             ],
         ],
 
@@ -52,8 +52,8 @@ This is the part of the configuration where you can specify which applications s
             'name' => 'name of the second app',
             'disks' => ['s3'],
             'health_checks' => [
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+                \Pinacono\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
+                \Pinacono\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
             ],
         ],
         */
@@ -69,7 +69,7 @@ the application that is being backed up.
 
 ## Get notifications of (un)healthy backups
 
-You can receive notifications when the monitor finds an (un)healthy backup. 
+You can receive notifications when the monitor finds an (un)healthy backup.
 Read the section on [notifications](/laravel-backup/v7/sending-notifications/overview) to learn more.
 
 ## Checking all backups

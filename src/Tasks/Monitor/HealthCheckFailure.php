@@ -1,30 +1,26 @@
-<?php
-
-namespace Spatie\Backup\Tasks\Monitor;
+<?php namespace Pinacono\Backup\Tasks\Monitor;
 
 use Exception;
-use Spatie\Backup\Exceptions\InvalidHealthCheck;
+use Pinacono\Backup\Exceptions\InvalidHealthCheck;
 
-class HealthCheckFailure
-{
-    public function __construct(
-        protected HealthCheck $healthCheck,
-        protected Exception $exception
-    ) {
-    }
+class HealthCheckFailure {
+  protected HealthCheck $healthCheck;
+  protected Exception $exception;
 
-    public function healthCheck(): HealthCheck
-    {
-        return $this->healthCheck;
-    }
+  public function __construct( HealthCheck $healthCheck, Exception $exception ) {
+    $this->healthCheck = $healthCheck;
+    $this->exception   = $exception;
+  }
 
-    public function exception(): Exception
-    {
-        return $this->exception;
-    }
+  public function healthCheck(): HealthCheck {
+    return $this->healthCheck;
+  }
 
-    public function wasUnexpected(): bool
-    {
-        return ! $this->exception instanceof InvalidHealthCheck;
-    }
+  public function exception(): Exception {
+    return $this->exception;
+  }
+
+  public function wasUnexpected(): bool {
+    return ! $this->exception instanceof InvalidHealthCheck;
+  }
 }

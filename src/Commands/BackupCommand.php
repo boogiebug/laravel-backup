@@ -1,84 +1,92 @@
-<?php
-
-namespace Spatie\Backup\Commands;
+<?php namespace Pinacono\Backup\Commands;
 
 use Exception;
-use Spatie\Backup\Events\BackupHasFailed;
-use Spatie\Backup\Exceptions\InvalidCommand;
-use Spatie\Backup\Tasks\Backup\BackupJobFactory;
+use Illuminate\Console\Command as BaseCommand;
 
-class BackupCommand extends BaseCommand
-{
-    protected $signature = 'backup:run {--filename=} {--only-db} {--db-name=*} {--only-files} {--only-to-disk=} {--disable-notifications} {--timeout=}';
+use Pinacono\Backup\Events\BackupHasFailed;
+use Pinacono\Backup\Exceptions\InvalidCommand;
+use Pinacono\Backup\Tasks\Backup\BackupJobFactory;
 
-    protected $description = 'Run the backup.';
+class BackupCommand extends BaseCommand {
+  protected $signature = 'backup:run
+                          {--filename=}
+                          {--only-db}
+                          {--db-name=*}
+                          {--only-files}
+                          {--only-to-disk=}
+                          {--disable-notifications}
+                          {--timeout=}';
 
-    public function handle()
-    {
-        consoleOutput()->comment('Starting backup...');
+  protected $description = 'Run the backup.';
 
-        $disableNotifications = $this->option('disable-notifications');
+  public function handle() {
+    ConsoleOutput()->comment('Starting backup...');
 
-        if ($this->option('timeout') && is_numeric($this->option('timeout'))) {
-            set_time_limit((int) $this->option('timeout'));
-        }
+    $disableNotifications = $this->option('disable-notifications');
 
-        try {
-            $this->guardAgainstInvalidOptions();
-
-            $backupJob = BackupJobFactory::createFromArray(config('backup'));
-
-            if ($this->option('only-db')) {
-                $backupJob->dontBackupFilesystem();
-            }
-            if ($this->option('db-name')) {
-                $backupJob->onlyDbName($this->option('db-name'));
-            }
-
-            if ($this->option('only-files')) {
-                $backupJob->dontBackupDatabases();
-            }
-
-            if ($this->option('only-to-disk')) {
-                $backupJob->onlyBackupTo($this->option('only-to-disk'));
-            }
-
-            if ($this->option('filename')) {
-                $backupJob->setFilename($this->option('filename'));
-            }
-
-            if ($disableNotifications) {
-                $backupJob->disableNotifications();
-            }
-
-            if (! $this->getSubscribedSignals()) {
-                $backupJob->disableSignals();
-            }
-
-            $backupJob->run();
-
-            consoleOutput()->comment('Backup completed!');
-        } catch (Exception $exception) {
-            consoleOutput()->error("Backup failed because: {$exception->getMessage()}.");
-
-            if (! $disableNotifications) {
-                event(new BackupHasFailed($exception));
-            }
-
-            return 1;
-        }
+    if ( $this->option('timeout') && is_numeric($this->option('timeout')) ) {
+      set_time_limit((int) $this->option('timeout'));
     }
 
-    protected function guardAgainstInvalidOptions()
-    {
-        if (! $this->option('only-db')) {
-            return;
-        }
+    try {
+      $this->guardAgainstInvalidOptions();
 
-        if (! $this->option('only-files')) {
-            return;
-        }
+      $backupJob = BackupJobFactory::createFromArray(config('backup'));
 
-        throw InvalidCommand::create('Cannot use `only-db` and `only-files` together');
+      if ($this->option('only-db')) {
+        $backupJob->dontBackupFilesystem();
+      }
+
+      if ($this->option('db-name')) {
+        $backupJob->onlyDbName($this->option('db-name'));
+      }
+
+      if ($this->option('only-files')) {
+        $backupJob->dontBackupDatabases();
+      }
+
+      if ($this->option('only-to-disk')) {
+        $backupJob->onlyBackupTo($this->option('only-to-disk'));
+      }
+
+      if ($this->option('filename')) {
+        $backupJob->setFilename($this->option('filename'));
+      }
+
+      if ($disableNotifications) {
+        $backupJob->disableNotifications();
+      }
+
+      if (! $this->getSubscribedSignals()) {
+        $backupJob->disableSignals();
+      }
+
+      $backupJob->run();
+
+      consoleOutput()->comment('Backup completed!');
+
     }
+    catch (Exception $exception) {
+
+      ConsoleOutput()->error("Backup failed because: {$exception->getMessage()}.");
+
+      if (! $disableNotifications) {
+        event(new BackupHasFailed($exception));
+      }
+
+      return 1;
+    }
+  }
+
+  protected function guardAgainstInvalidOptions() {
+    if ( ! $this->option('only-db') ) {
+      return;
+    }
+
+    if ( ! $this->option('only-files') ) {
+      return;
+    }
+
+    throw InvalidCommand::create('Cannot use `only-db` and `only-files` together');
+  }
 }

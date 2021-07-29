@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Backup\Tests\BackupDestination;
+namespace Pinacono\Backup\Tests\BackupDestination;
 
 use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemAdapter;
@@ -9,11 +9,11 @@ use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use Mockery as m;
 use Mockery\MockInterface;
-use Spatie\Backup\BackupDestination\Backup;
-use Spatie\Backup\BackupDestination\BackupDestination;
-use Spatie\Backup\BackupDestination\BackupDestinationFactory;
-use Spatie\Backup\Exceptions\InvalidBackupFile;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\BackupDestination\Backup;
+use Pinacono\Backup\BackupDestination\BackupDestination;
+use Pinacono\Backup\BackupDestination\BackupDestinationFactory;
+use Pinacono\Backup\Exceptions\InvalidBackupFile;
+use Pinacono\Backup\Tests\TestCase;
 
 class BackupTest extends TestCase
 {

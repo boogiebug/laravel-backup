@@ -1,15 +1,14 @@
-<?php
-
-namespace Spatie\Backup\Events;
+<?php namespace Pinacono\Backup\Events;
 
 use Exception;
-use Spatie\Backup\BackupDestination\BackupDestination;
+use Pinacono\Backup\BackupDestination\BackupDestination;
 
-class BackupHasFailed
-{
-    public function __construct(
-        public Exception $exception,
-        public ?BackupDestination $backupDestination = null,
-    ) {
-    }
+class BackupHasFailed {
+  public Exception $exception;
+  public ?BackupDestination $backupDestination = null;
+
+  public function __construct( Exception $exception, ?BackupDestination $backupDestination = null) {
+    $this->exception = $exception;
+    $this->backupDestination = $backupDestination;
+  }
 }

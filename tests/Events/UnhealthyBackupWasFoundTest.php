@@ -1,19 +1,19 @@
 <?php
 
-namespace Spatie\Backup\Tests\Events;
+namespace Pinacono\Backup\Tests\Events;
 
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
-use Spatie\Backup\BackupDestination\BackupDestination;
-use Spatie\Backup\Events\UnhealthyBackupWasFound;
-use Spatie\Backup\Exceptions\InvalidHealthCheck;
-use Spatie\Backup\Notifications\Notifiable;
-use Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification;
-use Spatie\Backup\Tasks\Monitor\HealthCheck;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\BackupDestination\BackupDestination;
+use Pinacono\Backup\Events\UnhealthyBackupWasFound;
+use Pinacono\Backup\Exceptions\InvalidHealthCheck;
+use Pinacono\Backup\Notifications\Notifiable;
+use Pinacono\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification;
+use Pinacono\Backup\Tasks\Monitor\HealthCheck;
+use Pinacono\Backup\Tests\TestCase;
 
 class UnhealthyBackupWasFoundTest extends TestCase
 {

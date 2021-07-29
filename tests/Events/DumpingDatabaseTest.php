@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Backup\Tests\Events;
+namespace Pinacono\Backup\Tests\Events;
 
 use Illuminate\Support\Facades\Event;
-use Spatie\Backup\Events\DumpingDatabase;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\Events\DumpingDatabase;
+use Pinacono\Backup\Tests\TestCase;
 
 class DumpingDatabaseTest extends TestCase
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Spatie\Backup\Tasks\Cleanup\Strategies;
+namespace Pinacono\Backup\Tasks\Cleanup\Strategies;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Spatie\Backup\BackupDestination\Backup;
-use Spatie\Backup\BackupDestination\BackupCollection;
-use Spatie\Backup\Tasks\Cleanup\CleanupStrategy;
-use Spatie\Backup\Tasks\Cleanup\Period;
+use Pinacono\Backup\BackupDestination\Backup;
+use Pinacono\Backup\BackupDestination\BackupCollection;
+use Pinacono\Backup\Tasks\Cleanup\CleanupStrategy;
+use Pinacono\Backup\Tasks\Cleanup\Period;
 
 class DefaultStrategy extends CleanupStrategy
 {

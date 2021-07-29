@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\Backup\Tests\Listeners;
+namespace Pinacono\Backup\Tests\Listeners;
 
-use Spatie\Backup\Events\BackupZipWasCreated;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\Events\BackupZipWasCreated;
+use Pinacono\Backup\Tests\TestCase;
 use ZipArchive;
 
 class EncryptBackupArchiveTest extends TestCase
@@ -80,7 +80,7 @@ class EncryptBackupArchiveTest extends TestCase
 
         copy($source, $target);
 
-        app()->call('\Spatie\Backup\Listeners\EncryptBackupArchive@handle', ['event' => new BackupZipWasCreated($target)]);
+        app()->call('\Pinacono\Backup\Listeners\EncryptBackupArchive@handle', ['event' => new BackupZipWasCreated($target)]);
 
         return $target;
     }

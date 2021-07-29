@@ -1,52 +1,47 @@
-<?php
-
-namespace Spatie\Backup\Commands;
+<?php namespace Pinacono\Backup\Commands;
 
 use Exception;
-use Spatie\Backup\BackupDestination\BackupDestinationFactory;
-use Spatie\Backup\Events\CleanupHasFailed;
-use Spatie\Backup\Tasks\Cleanup\CleanupJob;
-use Spatie\Backup\Tasks\Cleanup\CleanupStrategy;
+use Illuminate\Console\Command as BaseCommand;
 
-class CleanupCommand extends BaseCommand
-{
-    /** @var string */
-    protected $signature = 'backup:clean {--disable-notifications}';
+use Pinacono\Backup\BackupDestination\BackupDestinationFactory;
+use Pinacono\Backup\Events\CleanupHasFailed;
+use Pinacono\Backup\Tasks\Cleanup\CleanupJob;
+use Pinacono\Backup\Tasks\Cleanup\CleanupStrategy;
 
-    /** @var string */
-    protected $description = 'Remove all backups older than specified number of days in config.';
+class CleanupCommand extends BaseCommand {
 
-    protected CleanupStrategy $strategy;
+  /** @var string */
+  protected $signature = 'backup:clean {--disable-notifications}';
 
-    public function __construct(CleanupStrategy $strategy)
-    {
-        parent::__construct();
+  /** @var string */
+  protected $description = 'Remove all backups older than specified number of days in config.';
 
-        $this->strategy = $strategy;
+  protected CleanupStrategy $strategy;
+
+  public function __construct(CleanupStrategy $strategy) {
+    parent::__construct();
+    $this->strategy = $strategy;
+  }
+
+  public function handle() {
+    consoleOutput()->comment('Starting cleanup...');
+
+    $disableNotifications = $this->option('disable-notifications');
+
+    try {
+      $config = config('backup');
+      $backupDestinations = BackupDestinationFactory::createFromArray($config['backup']);
+      $cleanupJob = new CleanupJob($backupDestinations, $this->strategy, $disableNotifications);
+      $cleanupJob->run();
+      consoleOutput()->comment('Cleanup completed!');
+
     }
+    catch (Exception $exception) {
+      if ( ! $disableNotifications ) {
+        event(new CleanupHasFailed($exception));
+      }
 
-    public function handle()
-    {
-        consoleOutput()->comment('Starting cleanup...');
-
-        $disableNotifications = $this->option('disable-notifications');
-
-        try {
-            $config = config('backup');
-
-            $backupDestinations = BackupDestinationFactory::createFromArray($config['backup']);
-
-            $cleanupJob = new CleanupJob($backupDestinations, $this->strategy, $disableNotifications);
-
-            $cleanupJob->run();
-
-            consoleOutput()->comment('Cleanup completed!');
-        } catch (Exception $exception) {
-            if (! $disableNotifications) {
-                event(new CleanupHasFailed($exception));
-            }
-
-            return 1;
-        }
+      return 1;
     }
+  }
 }

@@ -1,71 +1,60 @@
-<?php
+<?php namespace Pinacono\Backup\Listeners;
 
-namespace Spatie\Backup\Listeners;
-
-use Spatie\Backup\Events\BackupZipWasCreated;
+use Pinacono\Backup\Events\BackupZipWasCreated;
 use ZipArchive;
 
-class EncryptBackupArchive
-{
-    public function handle(BackupZipWasCreated $event): void
-    {
-        if (! $this->shouldEncrypt()) {
-            return;
-        }
+class EncryptBackupArchive {
 
-        $zip = new ZipArchive;
+  public function handle(BackupZipWasCreated $event): void  {
+    if (! $this->shouldEncrypt()) {
+      return;
+    }
+    $zip = new ZipArchive;
+    $zip->open($event->pathToZip);
+    $this->encrypt($zip);
+    $zip->close();
+  }
 
-        $zip->open($event->pathToZip);
+  protected function encrypt(ZipArchive $zip): void {
+    $zip->setPassword(static::getPassword());
 
-        $this->encrypt($zip);
+    foreach (range(0, $zip->numFiles - 1) as $i) {
+      $zip->setEncryptionIndex($i, static::getAlgorithm());
+    }
+  }
 
-        $zip->close();
+  public static function shouldEncrypt(): bool {
+    $password = static::getPassword();
+    $algorithm = static::getAlgorithm();
+
+    if ($password === null) {
+      return false;
     }
 
-    protected function encrypt(ZipArchive $zip): void
-    {
-        $zip->setPassword(static::getPassword());
-
-        foreach (range(0, $zip->numFiles - 1) as $i) {
-            $zip->setEncryptionIndex($i, static::getAlgorithm());
-        }
+    if ($algorithm === null) {
+      return false;
     }
 
-    public static function shouldEncrypt(): bool
-    {
-        $password = static::getPassword();
-        $algorithm = static::getAlgorithm();
-
-        if ($password === null) {
-            return false;
-        }
-
-        if ($algorithm === null) {
-            return false;
-        }
-
-        if ($algorithm === false) {
-            return false;
-        }
-
-        return true;
+    if ($algorithm === false) {
+      return false;
     }
 
-    protected static function getPassword(): ?string
-    {
-        return config('backup.backup.password');
+    return true;
+  }
+
+  protected static function getPassword(): ?string {
+    return config('backup.backup.password');
+  }
+
+  protected static function getAlgorithm(): ?int {
+    $encryption = config('backup.backup.encryption');
+
+    if ($encryption === 'default') {
+      $encryption = defined("\ZipArchive::EM_AES_256")
+        ? ZipArchive::EM_AES_256
+        : null;
     }
 
-    protected static function getAlgorithm(): ?int
-    {
-        $encryption = config('backup.backup.encryption');
-
-        if ($encryption === 'default') {
-            $encryption = defined("\ZipArchive::EM_AES_256")
-                ? ZipArchive::EM_AES_256
-                : null;
-        }
-
-        return $encryption;
-    }
+    return $encryption;
+  }
 }

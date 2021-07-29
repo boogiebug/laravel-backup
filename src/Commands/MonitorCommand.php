@@ -1,40 +1,39 @@
-<?php
+<?php namespace Pinacono\Backup\Commands;
 
-namespace Spatie\Backup\Commands;
+use Illuminate\Console\Command as BaseCommand;
 
-use Spatie\Backup\Events\HealthyBackupWasFound;
-use Spatie\Backup\Events\UnhealthyBackupWasFound;
-use Spatie\Backup\Tasks\Monitor\BackupDestinationStatusFactory;
+use Pinacono\Backup\Events\HealthyBackupWasFound;
+use Pinacono\Backup\Events\UnhealthyBackupWasFound;
+use Pinacono\Backup\Tasks\Monitor\BackupDestinationStatusFactory;
 
-class MonitorCommand extends BaseCommand
-{
-    /** @var string */
-    protected $signature = 'backup:monitor';
+class MonitorCommand extends BaseCommand {
+  /** @var string */
+  protected $signature = 'backup:monitor';
 
-    /** @var string */
-    protected $description = 'Monitor the health of all backups.';
+  /** @var string */
+  protected $description = 'Monitor the health of all backups.';
 
-    public function handle()
-    {
-        $hasError = false;
+  public function handle() {
+    $hasError = false;
 
-        $statuses = BackupDestinationStatusFactory::createForMonitorConfig(config('backup.monitor_backups'));
+    $statuses = BackupDestinationStatusFactory::createForMonitorConfig(config('backup.monitor_backups'));
 
-        foreach ($statuses as $backupDestinationStatus) {
-            $diskName = $backupDestinationStatus->backupDestination()->diskName();
+    foreach ($statuses as $backupDestinationStatus) {
+      $diskName = $backupDestinationStatus->backupDestination()->diskName();
 
-            if ($backupDestinationStatus->isHealthy()) {
-                $this->info("The backups on {$diskName} are considered healthy.");
-                event(new HealthyBackupWasFound($backupDestinationStatus));
-            } else {
-                $hasError = true;
-                $this->error("The backups on {$diskName} are considered unhealthy!");
-                event(new UnhealthyBackupWasFound($backupDestinationStatus));
-            }
-        }
-
-        if ($hasError) {
-            return 1;
-        }
+      if ( $backupDestinationStatus->isHealthy() ) {
+        $this->info("The backups on {$diskName} are considered healthy.");
+        event(new HealthyBackupWasFound($backupDestinationStatus));
+      }
+      else {
+        $hasError = true;
+        $this->error("The backups on {$diskName} are considered unhealthy!");
+        event(new UnhealthyBackupWasFound($backupDestinationStatus));
+      }
     }
+
+    if ( $hasError ) {
+      return 1;
+    }
+  }
 }

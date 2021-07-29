@@ -1,13 +1,11 @@
-<?php
+<?php namespace Pinacono\Backup\Events;
 
-namespace Spatie\Backup\Events;
+use Pinacono\Backup\Tasks\Monitor\BackupDestinationStatus;
 
-use Spatie\Backup\Tasks\Monitor\BackupDestinationStatus;
+class UnhealthyBackupWasFound {
+  public BackupDestinationStatus $backupDestinationStatus;
 
-class UnhealthyBackupWasFound
-{
-    public function __construct(
-        public BackupDestinationStatus $backupDestinationStatus
-    ) {
-    }
+  public function __construct( BackupDestinationStatus $backupDestinationStatus ) {
+    $this->backupDestinationStatus = $backupDestinationStatus;
+  }
 }

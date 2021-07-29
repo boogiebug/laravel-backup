@@ -1,13 +1,13 @@
 <?php
 
-namespace Spatie\Backup\Tests\Commands;
+namespace Pinacono\Backup\Tests\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Backup\Events\BackupHasFailed;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\Events\BackupHasFailed;
+use Pinacono\Backup\Tests\TestCase;
 use Spatie\DbDumper\Compressors\GzipCompressor;
 
 class BackupCommandTest extends TestCase
@@ -290,7 +290,7 @@ class BackupCommandTest extends TestCase
          */
         $this->app['db']->disconnect();
     }
-    
+
     /** @test */
     public function it_should_trigger_the_backup_failed_event()
     {

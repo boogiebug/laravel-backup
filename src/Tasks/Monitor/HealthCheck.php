@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Backup\Tasks\Monitor;
+namespace Pinacono\Backup\Tasks\Monitor;
 
 use Illuminate\Support\Str;
-use Spatie\Backup\BackupDestination\BackupDestination;
-use Spatie\Backup\Exceptions\InvalidHealthCheck;
+use Pinacono\Backup\BackupDestination\BackupDestination;
+use Pinacono\Backup\Exceptions\InvalidHealthCheck;
 
 abstract class HealthCheck
 {

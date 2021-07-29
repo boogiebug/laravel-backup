@@ -1,13 +1,13 @@
 <?php
 
-namespace Spatie\Backup\Tests\Commands;
+namespace Pinacono\Backup\Tests\Commands;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Backup\Events\CleanupWasSuccessful;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\Events\CleanupWasSuccessful;
+use Pinacono\Backup\Tests\TestCase;
 
 class CleanupCommandTest extends TestCase
 {

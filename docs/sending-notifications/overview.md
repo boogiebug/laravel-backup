@@ -17,24 +17,24 @@ This is the portion of the configuration that will determine when and how notifi
      * For Slack you need to install laravel/slack-notification-channel.
      *
      * You can also use your own notification classes, just make sure the class is named after one of
-     * the `Spatie\Backup\Events` classes.
+     * the `Pinacono\Backup\Events` classes.
      */
     'notifications' => [
 
         'notifications' => [
-            \Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['mail'],
+            \Pinacono\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['mail'],
         ],
 
         /*
          * Here you can specify the notifiable to which the notifications should be sent. The default
          * notifiable will use the variables specified in this config file.
          */
-        'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
+        'notifiable' => \Pinacono\Backup\Notifications\Notifiable::class,
 
         'mail' => [
             'to' => 'your@example.com',

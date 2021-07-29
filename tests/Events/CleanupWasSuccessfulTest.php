@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Backup\Tests\Events;
+namespace Pinacono\Backup\Tests\Events;
 
 use Illuminate\Support\Facades\Event;
-use Spatie\Backup\Events\CleanupWasSuccessful;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\Events\CleanupWasSuccessful;
+use Pinacono\Backup\Tests\TestCase;
 
 class CleanupWasSuccessfulTest extends TestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\Backup\Tests;
+namespace Pinacono\Backup\Tests;
 
-use Spatie\Backup\Tasks\Backup\Zip;
+use Pinacono\Backup\Tasks\Backup\Zip;
 
 class ZipTest extends TestCase
 {

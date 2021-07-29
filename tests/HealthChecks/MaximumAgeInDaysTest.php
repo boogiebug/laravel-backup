@@ -1,13 +1,13 @@
 <?php
 
-namespace Spatie\Backup\Tests\HealthChecks;
+namespace Pinacono\Backup\Tests\HealthChecks;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
-use Spatie\Backup\Events\HealthyBackupWasFound;
-use Spatie\Backup\Events\UnhealthyBackupWasFound;
-use Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays;
-use Spatie\Backup\Tests\TestCase;
+use Pinacono\Backup\Events\HealthyBackupWasFound;
+use Pinacono\Backup\Events\UnhealthyBackupWasFound;
+use Pinacono\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays;
+use Pinacono\Backup\Tests\TestCase;
 
 class MaximumAgeInDaysTest extends TestCase
 {

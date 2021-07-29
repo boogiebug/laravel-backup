@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Backup\Tests;
+namespace Pinacono\Backup\Tests;
 
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
-use Spatie\Backup\Helpers\Format;
+use Pinacono\Backup\Helpers\Format;
 
 class FormatTest extends TestCase
 {
