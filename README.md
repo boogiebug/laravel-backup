@@ -1,6 +1,11 @@
-<p align="center"><img src="/art/socialcard.png" alt="Social Card of Laravel Activity Log"></p>
-
 # A modern backup solution for Laravel apps
+
+*IMPORTANT NOTE*
+This is the 'downgrade' version of Laravel-Backup. The objective of this branch
+is to provide backward support for older version of PHP (7.4) and Laravel (5.x).
+
+Please check the main branch for the latest Laravel version support
+
 
 [![Latest Stable Version](https://poser.pugx.org/spatie/laravel-backup/v/stable?format=flat-square)](https://packagist.org/packages/spatie/laravel-backup)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
