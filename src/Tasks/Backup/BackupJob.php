@@ -148,7 +148,7 @@ class BackupJob {
       $this->copyToBackupDestinations($zipFile);
     }
     catch (Exception $exception) {
-      consoleOutput()->error("Backup failed because {$exception->getMessage()}." . PHP_EOL . $exception->getTraceAsString());
+      $this->error("Backup failed because {$exception->getMessage()}." . PHP_EOL . $exception->getTraceAsString());
 
       $this->sendNotification(new BackupHasFailed($exception));
 
@@ -169,7 +169,7 @@ class BackupJob {
   protected function createBackupManifest(): Manifest {
     $databaseDumps = $this->dumpDatabases();
 
-    consoleOutput()->info('Determining files to backup...');
+    $this->info('Determining files to backup...');
 
     $manifest = Manifest::create($this->temporaryDirectory->path('manifest.txt'))
       ->addFiles($databaseDumps)
@@ -198,13 +198,13 @@ class BackupJob {
   }
 
   protected function createZipContainingEveryFileInManifest(Manifest $manifest): string {
-    consoleOutput()->info("Zipping {$manifest->count()} files and directories...");
+    $this->info("Zipping {$manifest->count()} files and directories...");
 
     $pathToZip = $this->temporaryDirectory->path(config('backup.backup.destination.filename_prefix') . $this->filename);
 
     $zip = Zip::createForManifest($manifest, $pathToZip);
 
-    consoleOutput()->info("Created zip containing {$zip->count()} files and directories. Size is {$zip->humanReadableSize()}");
+    $this->info("Created zip containing {$zip->count()} files and directories. Size is {$zip->humanReadableSize()}");
 
     $this->sendNotification(new BackupZipWasCreated($pathToZip));
 
@@ -220,7 +220,7 @@ class BackupJob {
   protected function dumpDatabases(): array {
     return $this->dbDumpers
       ->map(function (DbDumper $dbDumper, $key) {
-        consoleOutput()->info("Dumping database {$dbDumper->getDbName()}...");
+        $this->info("Dumping database {$dbDumper->getDbName()}...");
 
         $dbType = mb_strtolower(basename(str_replace('\\', '/', get_class($dbDumper))));
 
@@ -256,15 +256,15 @@ class BackupJob {
     $this->backupDestinations
       ->each(function (BackupDestination $backupDestination) use ($path) {
         try {
-          consoleOutput()->info("Copying zip to disk named {$backupDestination->diskName()}...");
+          $this->info("Copying zip to disk named {$backupDestination->diskName()}...");
 
           $backupDestination->write($path);
 
-          consoleOutput()->info("Successfully copied zip to disk named {$backupDestination->diskName()}.");
+          $this->info("Successfully copied zip to disk named {$backupDestination->diskName()}.");
 
           $this->sendNotification(new BackupWasSuccessful($backupDestination));
         } catch (Exception $exception) {
-          consoleOutput()->error("Copying zip failed because: {$exception->getMessage()}.");
+          $this->error("Copying zip failed because: {$exception->getMessage()}.");
 
           $this->sendNotification(new BackupHasFailed($exception, $backupDestination ?? null));
         }
@@ -275,7 +275,7 @@ class BackupJob {
     if ($this->sendNotifications) {
       rescue(
         fn () => event($notification),
-        fn () => consoleOutput()->error('Sending notification failed')
+        fn () => $this->error('Sending notification failed')
       );
     }
   }

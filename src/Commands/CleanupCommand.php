@@ -23,7 +23,7 @@ class CleanupCommand extends BaseCommand {
   }
 
   public function handle() {
-    consoleOutput()->comment('Starting cleanup...');
+    $this->comment('Starting cleanup...');
 
     $disableNotifications = $this->option('disable-notifications');
 
@@ -32,7 +32,7 @@ class CleanupCommand extends BaseCommand {
       $backupDestinations = BackupDestinationFactory::createFromArray($config['backup']);
       $cleanupJob = new CleanupJob($backupDestinations, $this->strategy, $disableNotifications);
       $cleanupJob->run();
-      consoleOutput()->comment('Cleanup completed!');
+      $this->comment('Cleanup completed!');
 
     }
     catch (Exception $exception) {

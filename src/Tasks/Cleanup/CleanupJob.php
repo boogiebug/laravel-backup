@@ -30,7 +30,7 @@ class CleanupJob {
           throw new Exception("Could not connect to disk {$backupDestination->diskName()} because: {$backupDestination->connectionError()}");
         }
 
-        consoleOutput()->info("Cleaning backups of {$backupDestination->backupName()} on disk {$backupDestination->diskName()}...");
+        $this->info("Cleaning backups of {$backupDestination->backupName()} on disk {$backupDestination->diskName()}...");
 
         $this->strategy
           ->setBackupDestination($backupDestination)
@@ -43,7 +43,6 @@ class CleanupJob {
       }
       catch (Exception $exception) {
         consoleOutput()->error("Cleanup failed because: {$exception->getMessage()}.");
-
         $this->sendNotification(new CleanupHasFailed($exception));
 
         throw $exception;

@@ -19,7 +19,7 @@ class BackupCommand extends BaseCommand {
   protected $description = 'Run the backup.';
 
   public function handle() {
-    ConsoleOutput()->comment('Starting backup...');
+    $this->comment('Starting backup...');
 
     $disableNotifications = $this->option('disable-notifications');
 
@@ -64,12 +64,12 @@ class BackupCommand extends BaseCommand {
 
       $backupJob->run();
 
-      consoleOutput()->comment('Backup completed!');
+      $this->comment('Backup completed!');
 
     }
     catch (Exception $exception) {
 
-      ConsoleOutput()->error("Backup failed because: {$exception->getMessage()}.");
+      $this->error("Backup failed because: {$exception->getMessage()}.");
 
       if (! $disableNotifications) {
         event(new BackupHasFailed($exception));
