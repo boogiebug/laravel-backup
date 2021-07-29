@@ -40,7 +40,8 @@ class CleanupJob {
 
         $usedStorage = Format::humanReadableSize($backupDestination->fresh()->usedStorage());
         consoleOutput()->info("Used storage after cleanup: {$usedStorage}.");
-      } catch (Exception $exception) {
+      }
+      catch (Exception $exception) {
         consoleOutput()->error("Cleanup failed because: {$exception->getMessage()}.");
 
         $this->sendNotification(new CleanupHasFailed($exception));

@@ -1,8 +1,7 @@
 <?php namespace Pinacono\Backup\Commands;
 
 use Exception;
-use Illuminate\Console\Command as BaseCommand;
-
+use Pinacono\Backup\Commands\BaseCommand;
 use Pinacono\Backup\BackupDestination\BackupDestinationFactory;
 use Pinacono\Backup\Events\CleanupHasFailed;
 use Pinacono\Backup\Tasks\Cleanup\CleanupJob;

@@ -1,8 +1,7 @@
 <?php namespace Pinacono\Backup\Commands;
 
 use Illuminate\Support\Collection;
-use Illuminate\Console\Command as BaseCommand;
-
+use Pinacono\Backup\Commands\BaseCommand;
 use Pinacono\Backup\BackupDestination\Backup;
 use Pinacono\Backup\Helpers\Format;
 use Pinacono\Backup\Helpers\RightAlignedTableStyle;
