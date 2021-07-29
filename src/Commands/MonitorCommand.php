@@ -1,7 +1,6 @@
 <?php namespace Pinacono\Backup\Commands;
 
-use Illuminate\Console\Command as BaseCommand;
-
+use Pinacono\Backup\Commands\BaseCommand;
 use Pinacono\Backup\Events\HealthyBackupWasFound;
 use Pinacono\Backup\Events\UnhealthyBackupWasFound;
 use Pinacono\Backup\Tasks\Monitor\BackupDestinationStatusFactory;

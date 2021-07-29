@@ -1,8 +1,7 @@
 <?php namespace Pinacono\Backup\Commands;
 
 use Exception;
-use Illuminate\Console\Command as BaseCommand;
-
+use Pinacono\Backup\Commands\BaseCommand;
 use Pinacono\Backup\Events\BackupHasFailed;
 use Pinacono\Backup\Exceptions\InvalidCommand;
 use Pinacono\Backup\Tasks\Backup\BackupJobFactory;
@@ -57,9 +56,11 @@ class BackupCommand extends BaseCommand {
         $backupJob->disableNotifications();
       }
 
+      /*
       if (! $this->getSubscribedSignals()) {
         $backupJob->disableSignals();
       }
+      */
 
       $backupJob->run();
 

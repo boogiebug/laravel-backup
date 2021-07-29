@@ -39,10 +39,10 @@ class CleanupJob {
         $this->sendNotification(new CleanupWasSuccessful($backupDestination));
 
         $usedStorage = Format::humanReadableSize($backupDestination->fresh()->usedStorage());
-        $this->info("Used storage after cleanup: {$usedStorage}.");
-      } catch (Exception $exception) {
-        $this->error("Cleanup failed because: {$exception->getMessage()}.");
-
+        consoleOutput()->info("Used storage after cleanup: {$usedStorage}.");
+      }
+      catch (Exception $exception) {
+        consoleOutput()->error("Cleanup failed because: {$exception->getMessage()}.");
         $this->sendNotification(new CleanupHasFailed($exception));
 
         throw $exception;
