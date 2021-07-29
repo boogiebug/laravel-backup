@@ -71,13 +71,13 @@ class Backup {
 
   public function delete(): void {
     if (! $this->disk->delete($this->path)) {
-      consoleOutput()->error("Failed to delete backup `{$this->path}`.");
+      $this->error("Failed to delete backup `{$this->path}`.");
 
       return;
     }
 
     $this->exists = false;
 
-    consoleOutput()->info("Deleted backup `{$this->path}`.");
+    $this->info("Deleted backup `{$this->path}`.");
   }
 }

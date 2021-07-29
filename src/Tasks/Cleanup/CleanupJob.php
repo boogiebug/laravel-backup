@@ -30,7 +30,7 @@ class CleanupJob {
           throw new Exception("Could not connect to disk {$backupDestination->diskName()} because: {$backupDestination->connectionError()}");
         }
 
-        consoleOutput()->info("Cleaning backups of {$backupDestination->backupName()} on disk {$backupDestination->diskName()}...");
+        $this->info("Cleaning backups of {$backupDestination->backupName()} on disk {$backupDestination->diskName()}...");
 
         $this->strategy
           ->setBackupDestination($backupDestination)
@@ -39,9 +39,9 @@ class CleanupJob {
         $this->sendNotification(new CleanupWasSuccessful($backupDestination));
 
         $usedStorage = Format::humanReadableSize($backupDestination->fresh()->usedStorage());
-        consoleOutput()->info("Used storage after cleanup: {$usedStorage}.");
+        $this->info("Used storage after cleanup: {$usedStorage}.");
       } catch (Exception $exception) {
-        consoleOutput()->error("Cleanup failed because: {$exception->getMessage()}.");
+        $this->error("Cleanup failed because: {$exception->getMessage()}.");
 
         $this->sendNotification(new CleanupHasFailed($exception));
 
